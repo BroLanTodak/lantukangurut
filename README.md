@@ -14,12 +14,15 @@ Website personal untuk **Lan**, seorang tukang urut profesional yang mempunyai b
 ## 🗂️ Struktur Fail Projek
 
 ```
-📂 class/
-├── 📄 testing.html     (142 baris) - Halaman utama website
-├── 📄 styles.css       (289 baris) - Semua styling dan design
-├── 📄 script.js        (41 baris)  - JavaScript untuk interaktiviti
-├── 📄 README.md        - Dokumentasi projek (fail ini)
-└── 📂 test/           - Folder untuk testing
+📂 lantukangurut/
+├── 📄 index.html               (12.8KB) - Halaman utama website
+├── 📄 styles.css               (15.2KB) - Styling lengkap dengan forms
+├── 📄 script.js                (12.5KB) - JavaScript dengan Supabase
+├── 📄 supabase-config.js       (1.1KB)  - Konfigurasi Supabase
+├── 📄 supabase-setup.sql       (6.8KB)  - Database setup script
+├── 📄 cuti_perayaan_2025.json  (14.3KB) - Data kalendar perayaan
+├── 📄 README.md                (8.2KB)  - Dokumentasi projek
+└── 📂 .git/                    - Git repository data
 ```
 
 ## 🏗️ Struktur Website (Sections)
@@ -93,6 +96,16 @@ Website personal untuk **Lan**, seorang tukang urut profesional yang mempunyai b
   - DOM manipulation
   - Event listeners
   - Smooth scrolling navigation
+  - Async/await untuk API calls
+  - Form handling dan validation
+
+### **Backend:**
+- **Supabase**: 
+  - PostgreSQL database
+  - Real-time subscriptions
+  - Row Level Security (RLS)
+  - RESTful API
+  - Authentication ready
 
 ### **Features Teknikal:**
 - **Responsive Design**: Desktop, tablet, mobile friendly
@@ -100,6 +113,9 @@ Website personal untuk **Lan**, seorang tukang urut profesional yang mempunyai b
 - **Smooth Scrolling**: Navigation yang halus antara sections
 - **Dynamic Particles**: JavaScript-generated floating elements
 - **Scroll-triggered Effects**: Header background changes
+- **Real-time Forms**: Booking dan contact forms dengan database storage
+- **Analytics Tracking**: User interaction tracking
+- **Notification System**: Real-time feedback untuk users
 
 ## 🔧 Cara Sistem Navigation Berfungsi
 
@@ -136,9 +152,14 @@ User klik "Perkhidmatan"
 - ✅ Animated floating particles
 - ✅ Gradient backgrounds dengan visual appeal
 - ✅ Service cards dengan hover effects
-- ✅ Contact information layout
+- ✅ Interactive calendar dengan 28 perayaan Malaysia 2025
+- ✅ Booking system dengan Supabase integration
+- ✅ Contact form dengan database storage
+- ✅ Real-time notifications
+- ✅ Analytics tracking
 - ✅ Professional branding dan mystical theme
 - ✅ Clean code structure (separated HTML, CSS, JS)
+- ✅ Database backend dengan Supabase
 
 ## 🔮 Idea Untuk Improvement Masa Depan
 
@@ -196,6 +217,35 @@ User klik "Perkhidmatan"
 - Specific address instead of "Kuala Lumpur, Malaysia"
 - Actual operating hours kalau different
 
+## 🛠️ Supabase Setup
+
+### **Database Setup:**
+1. **Buka Supabase Dashboard**: [https://supabase.com/dashboard](https://supabase.com/dashboard)
+2. **Pergi ke SQL Editor** dalam projek anda
+3. **Copy dan paste** kandungan `supabase-setup.sql`
+4. **Run** script untuk create tables dan policies
+
+### **Tables Yang Dibuat:**
+- **`contacts`**: Simpan contact form submissions
+- **`bookings`**: Simpan appointment bookings
+- **`analytics`**: Track website interactions
+- **`testimonials`**: Customer reviews (optional)
+
+### **Configuration:**
+- Update `supabase-config.js` dengan credentials anda:
+  ```javascript
+  const SUPABASE_CONFIG = {
+      url: 'YOUR_SUPABASE_URL',
+      anonKey: 'YOUR_ANON_KEY'
+  };
+  ```
+
+### **Security Features:**
+- ✅ Row Level Security (RLS) enabled
+- ✅ Anonymous insert policies
+- ✅ Data validation
+- ✅ Secure API endpoints
+
 ## 📝 Notes Untuk Development
 
 ### **Best Practices Yang Diikuti:**
@@ -204,12 +254,15 @@ User klik "Perkhidmatan"
 - Mobile-first responsive design
 - Clean, readable code dengan comments
 - Consistent naming conventions
+- Secure database integration
+- Real-time form handling
 
 ### **Performance Considerations:**
 - Minimal external dependencies
 - Optimized CSS (no unused styles)
 - Efficient JavaScript (event delegation)
-- Proper image handling (kalau ada images masa depan)
+- Async database operations
+- Error handling untuk network issues
 
 ## 🎨 Brand Identity
 

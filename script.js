@@ -205,8 +205,199 @@ function applyFilters() {
 
 // Initialize calendar when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Supabase
+    initSupabase();
+    
     // Check if we're on a page with calendar section
     if (document.getElementById('calendarGrid')) {
         loadCalendarData();
     }
+    
+    // Setup contact form
+    setupContactForm();
+    
+    // Setup booking form
+    setupBookingForm();
+});
+
+// Contact Form Functionality
+function setupContactForm() {
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', handleContactSubmit);
+    }
+}
+
+async function handleContactSubmit(e) {
+    e.preventDefault();
+    
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    
+    // Show loading state
+    submitBtn.textContent = 'Menghantar...';
+    submitBtn.disabled = true;
+    
+    try {
+        const formData = new FormData(e.target);
+        const contactData = {
+            nama: formData.get('nama'),
+            telefon: formData.get('telefon'),
+            email: formData.get('email'),
+            mesej: formData.get('mesej'),
+            created_at: new Date().toISOString()
+        };
+        
+        const { data, error } = await supabase
+            .from('contacts')
+            .insert([contactData]);
+            
+        if (error) throw error;
+        
+        // Success
+        showNotification('✅ Mesej berjaya dihantar! Saya akan menghubungi anda tidak lama lagi.', 'success');
+        e.target.reset();
+        
+    } catch (error) {
+        console.error('Error submitting contact form:', error);
+        showNotification('❌ Ralat menghantar mesej. Sila cuba lagi.', 'error');
+    } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    }
+}
+
+// Booking Form Functionality
+function setupBookingForm() {
+    const bookingForm = document.getElementById('bookingForm');
+    if (bookingForm) {
+        bookingForm.addEventListener('submit', handleBookingSubmit);
+    }
+}
+
+async function handleBookingSubmit(e) {
+    e.preventDefault();
+    
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    
+    // Show loading state
+    submitBtn.textContent = 'Menempah...';
+    submitBtn.disabled = true;
+    
+    try {
+        const formData = new FormData(e.target);
+        const bookingData = {
+            nama: formData.get('nama'),
+            telefon: formData.get('telefon'),
+            email: formData.get('email'),
+            perkhidmatan: formData.get('perkhidmatan'),
+            tarikh: formData.get('tarikh'),
+            masa: formData.get('masa'),
+            catatan: formData.get('catatan'),
+            status: 'pending',
+            created_at: new Date().toISOString()
+        };
+        
+        const { data, error } = await supabase
+            .from('bookings')
+            .insert([bookingData]);
+            
+        if (error) throw error;
+        
+        // Success
+        showNotification('✅ Tempahan berjaya! Saya akan menghubungi anda untuk pengesahan.', 'success');
+        e.target.reset();
+        
+    } catch (error) {
+        console.error('Error submitting booking:', error);
+        showNotification('❌ Ralat membuat tempahan. Sila cuba lagi.', 'error');
+    } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    }
+}
+
+// Notification System
+function showNotification(message, type = 'info') {
+    // Remove existing notifications
+    const existingNotification = document.querySelector('.notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+    
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <span>${message}</span>
+            <button class="notification-close" onclick="this.parentElement.parentElement.remove()">×</button>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.remove();
+        }
+    }, 5000);
+}
+
+// Analytics - Track page views and interactions
+async function trackPageView() {
+    if (!supabase) return;
+    
+    try {
+        const { data, error } = await supabase
+            .from('analytics')
+            .insert([{
+                event_type: 'page_view',
+                page_url: window.location.href,
+                user_agent: navigator.userAgent,
+                timestamp: new Date().toISOString()
+            }]);
+            
+        if (error) console.error('Analytics error:', error);
+    } catch (error) {
+        console.error('Analytics tracking error:', error);
+    }
+}
+
+// Track interactions
+function trackInteraction(action, details = {}) {
+    if (!supabase) return;
+    
+    supabase
+        .from('analytics')
+        .insert([{
+            event_type: 'interaction',
+            action: action,
+            details: JSON.stringify(details),
+            timestamp: new Date().toISOString()
+        }])
+        .then(({ error }) => {
+            if (error) console.error('Analytics error:', error);
+        });
+}
+
+// Initialize analytics on load
+window.addEventListener('load', function() {
+    trackPageView();
+    
+    // Track CTA button clicks
+    document.querySelectorAll('.cta-button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            trackInteraction('cta_click', { text: btn.textContent });
+        });
+    });
+    
+    // Track service card interactions
+    document.querySelectorAll('.service-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const title = card.querySelector('h3')?.textContent;
+            trackInteraction('service_view', { service: title });
+        });
+    });
 });

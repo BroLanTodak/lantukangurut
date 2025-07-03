@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lan - Tukang Urut Profesional & Penyembuh Mistik</title>
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- Supabase JavaScript Library -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <!-- Floating Particles -->
@@ -30,6 +33,7 @@
                     <li><a href="#services">Perkhidmatan</a></li>
                     <li><a href="#about">Tentang</a></li>
                     <li><a href="#calendar">Kalendar</a></li>
+                    <li><a href="#booking">Tempahan</a></li>
                     <li><a href="#contact">Hubungi</a></li>
                 </ul>
             </nav>
@@ -45,7 +49,7 @@
                 <p class="description">
                     Menggunakan gabungan teknik urutan tradisional dan kebolehan mistik yang luar biasa untuk memberikan penyembuhan holistik yang menyeluruh bagi badan, minda dan jiwa anda.
                 </p>
-                <a href="#contact" class="cta-button">Tempah Sesi Sekarang</a>
+                <a href="#booking" class="cta-button">Tempah Sesi Sekarang</a>
             </div>
         </div>
     </section>
@@ -186,27 +190,159 @@
         </div>
     </section>
 
+    <!-- Booking Section -->
+    <section id="booking" class="booking">
+        <div class="container">
+            <h2>Tempah Sesi Penyembuhan</h2>
+            <p class="booking-description">Sila isi borang di bawah untuk membuat tempahan. Saya akan menghubungi anda untuk pengesahan.</p>
+            
+            <div class="booking-content">
+                <div class="booking-form-container">
+                    <form id="bookingForm" class="booking-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="booking-nama">Nama Penuh *</label>
+                                <input type="text" id="booking-nama" name="nama" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="booking-telefon">No. Telefon *</label>
+                                <input type="tel" id="booking-telefon" name="telefon" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="booking-email">Email</label>
+                            <input type="email" id="booking-email" name="email">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="booking-perkhidmatan">Perkhidmatan *</label>
+                                <select id="booking-perkhidmatan" name="perkhidmatan" required>
+                                    <option value="">Pilih Perkhidmatan</option>
+                                    <option value="urutan_tradisional">Urutan Tradisional</option>
+                                    <option value="penyembuhan_mistik">Penyembuhan Mistik</option>
+                                    <option value="terapi_holistik">Terapi Holistik</option>
+                                    <option value="kombinasi">Kombinasi Semua</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="booking-tarikh">Tarikh Pilihan *</label>
+                                <input type="date" id="booking-tarikh" name="tarikh" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="booking-masa">Masa Pilihan *</label>
+                            <select id="booking-masa" name="masa" required>
+                                <option value="">Pilih Masa</option>
+                                <option value="09:00">9:00 AM</option>
+                                <option value="10:00">10:00 AM</option>
+                                <option value="11:00">11:00 AM</option>
+                                <option value="14:00">2:00 PM</option>
+                                <option value="15:00">3:00 PM</option>
+                                <option value="16:00">4:00 PM</option>
+                                <option value="17:00">5:00 PM</option>
+                                <option value="19:00">7:00 PM</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="booking-catatan">Catatan Tambahan</label>
+                            <textarea id="booking-catatan" name="catatan" rows="4" placeholder="Sebarang masalah kesihatan atau keperluan khas..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <span>📅 Buat Tempahan</span>
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="booking-info">
+                    <div class="info-card">
+                        <div class="info-icon">⏰</div>
+                        <h3>Waktu Operasi</h3>
+                        <p>Isnin - Sabtu: 9:00 AM - 8:00 PM<br>
+                        Ahad: Dengan temujanji sahaja</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">💰</div>
+                        <h3>Kadar Sesi</h3>
+                        <p>Urutan Tradisional: RM 80/sesi<br>
+                        Penyembuhan Mistik: RM 120/sesi<br>
+                        Terapi Holistik: RM 150/sesi</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">📍</div>
+                        <h3>Lokasi</h3>
+                        <p>Klinik Wellness Lan<br>
+                        Kuala Lumpur, Malaysia<br>
+                        <small>Alamat lengkap akan diberikan selepas pengesahan</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
             <h2>Hubungi Saya</h2>
-            <p>Sedia untuk memulakan perjalanan penyembuhan anda? Hubungi saya sekarang untuk tempahan atau pertanyaan.</p>
+            <p class="contact-description">Ada pertanyaan atau ingin mendapatkan maklumat lanjut? Sila isi borang di bawah atau hubungi terus.</p>
             
-            <div class="contact-info">
-                <div class="contact-item">
-                    <h3>📱 WhatsApp</h3>
-                    <p>+60XX-XXX XXXX</p>
-                    <p>Respons pantas dalam 24 jam</p>
+            <div class="contact-content">
+                <div class="contact-form-container">
+                    <h3>Hantar Mesej</h3>
+                    <form id="contactForm" class="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contact-nama">Nama Penuh *</label>
+                                <input type="text" id="contact-nama" name="nama" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-telefon">No. Telefon *</label>
+                                <input type="tel" id="contact-telefon" name="telefon" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-email">Email</label>
+                            <input type="email" id="contact-email" name="email">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-mesej">Mesej *</label>
+                            <textarea id="contact-mesej" name="mesej" rows="5" placeholder="Tulis mesej anda di sini..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <span>📨 Hantar Mesej</span>
+                        </button>
+                    </form>
                 </div>
-                <div class="contact-item">
-                    <h3>📍 Lokasi</h3>
-                    <p>Klinik Wellness Lan</p>
-                    <p>Kuala Lumpur, Malaysia</p>
-                </div>
-                <div class="contact-item">
-                    <h3>⏰ Waktu Operasi</h3>
-                    <p>Isnin - Sabtu: 9:00 AM - 8:00 PM</p>
-                    <p>Ahad: Dengan temujanji sahaja</p>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h3>📱 WhatsApp</h3>
+                        <p>+60XX-XXX XXXX</p>
+                        <p>Respons pantas dalam 24 jam</p>
+                        <a href="https://wa.me/60XXXXXXXXX" class="whatsapp-btn" target="_blank">
+                            💬 WhatsApp Terus
+                        </a>
+                    </div>
+                    <div class="contact-item">
+                        <h3>📍 Lokasi</h3>
+                        <p>Klinik Wellness Lan</p>
+                        <p>Kuala Lumpur, Malaysia</p>
+                        <small>Alamat lengkap akan diberikan selepas pengesahan tempahan</small>
+                    </div>
+                    <div class="contact-item">
+                        <h3>⏰ Waktu Operasi</h3>
+                        <p>Isnin - Sabtu: 9:00 AM - 8:00 PM</p>
+                        <p>Ahad: Dengan temujanji sahaja</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -219,6 +355,10 @@
         </div>
     </footer>
 
+    <!-- Supabase Configuration -->
+    <script src="supabase-config.js"></script>
+    
+    <!-- Main Application Script -->
     <script src="script.js"></script>
 </body>
 </html>
